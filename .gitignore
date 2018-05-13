@@ -24,4 +24,5 @@ ide_profiles/xcode/Debug/
 ide_profiles/xcode/ExtendedKF.build/
 
 # Kdevelop files
-*kdev*
+*.kdev4
+build_kdev/
