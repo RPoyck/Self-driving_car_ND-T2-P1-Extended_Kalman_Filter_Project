@@ -6,6 +6,7 @@ using Eigen::VectorXd;
 // Please note that the Eigen library does not initialize 
 // VectorXd or MatrixXd objects with zeros upon creation.
 
+
 // Constructor //
 KalmanFilter::KalmanFilter() {}
 
@@ -13,27 +14,31 @@ KalmanFilter::KalmanFilter() {}
 // Destructor //
 KalmanFilter::~KalmanFilter() {}
 
+
 void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
                         MatrixXd &H_in, MatrixXd &R_in, MatrixXd &Q_in) {
+    
   x_ = x_in;
   P_ = P_in;
   F_ = F_in;
   H_ = H_in;
   R_ = R_in;
   Q_ = Q_in;
+  
 }
 
+
 void KalmanFilter::Predict() {
-    /**
-    TODO:
-	* predict the state
-    */
+    
+    // Predict the state //
     x_ = F_ * x_;
     MatrixXd Ft = F_.transpose();
     P_ = F_ * P_ * Ft + Q_;
+    
 }
 
 
+// The core Kalman filter update functions which are the same for both the Linear and Extended Kalman filter //
 void KalmanFilter::UpdateCore(const VectorXd &y) {
     
     MatrixXd Ht = H_.transpose();
@@ -51,11 +56,10 @@ void KalmanFilter::UpdateCore(const VectorXd &y) {
 }
 
 
+// Updates using a linear Kalman filter //
 void KalmanFilter::Update(const VectorXd &z) {
-    /**
-    TODO:
-    * update the state by using Kalman Filter equations
-    */
+    
+    // Generate the LKF-specific y vector //
     VectorXd z_pred = H_ * x_;
     VectorXd y = z - z_pred;
     
@@ -64,21 +68,21 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 
+// Normalises the y vector for a EKF to make sure the value of phi is between -pi and +pi //
 VectorXd KalmanFilter::Normalise_y(const VectorXd &y) {
+    
     VectorXd y_norm = y;
 
     while (y_norm(1) < -M_PI) {y_norm(1) += 2*M_PI;}
     while (M_PI < y_norm(1)) {y_norm(1) -= 2*M_PI;}
     
     return y_norm;
+    
 }
 
 
+// Updates using a extended Kalman filter //
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-    /**
-    TODO:
-	* update the state by using Extended Kalman Filter equations
-    */
     
     // Define the equations which map the predicted location x' from Cartesian to polar coordinates //
     VectorXd h = VectorXd(3);
@@ -86,6 +90,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     h(1) = atan2(x_(1), x_(0));
     h(2) = (x_(0)*x_(2) + x_(1)*x_(3))/h(0);
     
+    // Generate the EKF-specific y vector and normalise phi //
     VectorXd y = z - h;
     
     VectorXd y_norm = Normalise_y(y);

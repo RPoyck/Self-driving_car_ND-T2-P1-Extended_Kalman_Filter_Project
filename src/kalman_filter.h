@@ -40,7 +40,7 @@ public:
     * @param F_in Transition matrix
     * @param H_in Measurement matrix
     * @param R_in Measurement covariance matrix
-    * @param Q_in Process covariance matrix
+    * @param Q_in Process covathe riance matrix
     */
     void Init(Eigen::VectorXd &x_in, Eigen::MatrixXd &P_in, Eigen::MatrixXd &F_in,
 	Eigen::MatrixXd &H_in, Eigen::MatrixXd &R_in, Eigen::MatrixXd &Q_in);
@@ -51,7 +51,8 @@ public:
     * @param delta_T Time between k and k+1 in s
     */
     void Predict();
-
+    
+    // The core Kalman filter update functions which are the same for both the Linear and Extended Kalman filter //
     void UpdateCore(const Eigen::VectorXd &y);
     
     /**
@@ -60,6 +61,7 @@ public:
     */
     void Update(const Eigen::VectorXd &z);
 
+    // Normalises the y vector for a EKF to make sure the value of phi is between -pi and +pi //
     Eigen::VectorXd Normalise_y(const Eigen::VectorXd &y);
     
     /**
