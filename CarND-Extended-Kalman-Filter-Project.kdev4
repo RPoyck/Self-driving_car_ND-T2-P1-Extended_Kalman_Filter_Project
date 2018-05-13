@@ -1,0 +1,3 @@
+[Project]
+Manager=KDevCMakeManager
+Name=CarND-Extended-Kalman-Filter-Project
