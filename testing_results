@@ -1,0 +1,60 @@
+Base:
+RMSE: 	0.0973178
+	0.0854597
+	0.451267
+	0.439935
+
+EKF only:
+RMSE: 	0.230186
+	0.346434
+  	0.5835
+ 	0.80404
+
+LKF only:
+RMSE: 	0.147296
+	0.115293
+	0.638337
+	0.534584
+
+
+
+
+
+
+
+Measurement covariance div by 10 lidar:
+RMSE: 	0.107182
+	0.103329
+	0.508983
+	0.460595
+
+Measurement covariance times 10 lidar:
+RMSE: 	0.143098
+	0.169521
+	0.514168
+	0.632308
+
+Measurement covariance times 10000 lidar:
+RMSE: 	0.229917
+	0.345888
+	0.583334
+	0.803681
+
+
+Measurement covariance div by 10 radar:
+RMSE: 	0.113138
+	0.128272
+	0.480381
+	0.486128
+
+Measurement covariance times 10 radar:
+RMSE: 	0.125149
+	0.102455
+	0.544942
+	0.491114
+
+Measurement covariance times 10000 radar:
+RMSE: 	0.146005
+	0.115254
+	0.601229
+	0.536267
